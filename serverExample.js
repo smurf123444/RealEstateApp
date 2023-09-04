@@ -16,7 +16,7 @@ const corsOptions = {
     user: 'frontend',
     password: '12341234',
     server: 'localhost',
-    database: 'RealEstateApp',
+    database: 'RoverApp',
     port: 1433,
     trustServerCertificate: true
 };
@@ -102,156 +102,6 @@ app.post('/api/register', async (req, res) => {
       }
     });
 });
-app.post('/api/editListing', async (req, res) => {
-  const {
-    ID,
-    address,
-    city,
-    state,
-    zip,
-    price,
-    bedrooms,
-    bathrooms,
-    squareFeet,
-    description,
-    dateListed,
-    isActive,
-    agentID
-  } = req.body;
-
-  if (!ID) {
-    return res.status(400).json({ error: 'Listing ID is required.' });
-  }
-
-  try {
-    const pool = await sql.connect(config);
-    const queryString = `
-        UPDATE RealEstateListings SET
-            Address = @address,
-            City = @city,
-            State = @state,
-            ZipCode = @zip,
-            Price = @price,
-            Bedrooms = @bedrooms,
-            Bathrooms = @bathrooms,
-            SquareFeet = @squareFeet,
-            Description = @description,
-            DateListed = @dateListed,
-            IsActive = @isActive,
-            AgentID = @agentID,
-            DateModified = GETDATE()
-        WHERE ListingID = @ID
-    `;
-
-    const request = pool.request();
-    
-    request.input('ID', sql.Int, ID);
-    request.input('address', sql.NVarChar(255), address);
-    request.input('city', sql.NVarChar(255), city);
-    request.input('state', sql.NVarChar(255), state);
-    request.input('zip', sql.NVarChar(50), zip); // Assuming ZipCode is of type NVarChar(50), adjust as necessary.
-    request.input('price', sql.Decimal(20,2), price);
-    request.input('bedrooms', sql.Int, bedrooms);
-    request.input('bathrooms', sql.Decimal(3,1), bathrooms);
-    request.input('squareFeet', sql.Int, squareFeet);
-    request.input('description', sql.NVarChar(255), description);
-    request.input('dateListed', sql.DateTime, new Date(dateListed)); // Assuming DateListed is of type DateTime.
-    request.input('isActive', sql.NVarChar(255), isActive); // Assuming IsActive is of type Bit.
-    request.input('agentID', sql.NVarChar(255), agentID);
-    
-    const result = await request.query(queryString);
-
-    if (result.rowsAffected[0] > 0) {
-      res.json({ message: 'Listing updated successfully.' });
-    } else {
-      res.status(404).json({ error: 'Listing not found.' });
-    }
-
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Error updating listing' });
-  }
-});
-
-
-app.post('/api/getListings', async (req, res) => {
-  try {
-    const pool = await sql.connect(config);
-    const result = await pool.request().query('SELECT * FROM RealEstateListings');
-
-    if (result.recordset.length === 0) {
-      return res.status(404).json({ message: 'No listings found.', listings: [] });
-    }
-
-    const mappedListings = result.recordset.map(listing => ({
-      id: listing.ListingID,
-      address: listing.Address, // Using Address as PropertyName
-      city: listing.City,
-      state: listing.State,
-      zip: listing.ZipCode,
-      price: listing.Price,
-      bedrooms: listing.Bedrooms,
-      bathrooms: listing.Bathrooms,
-      squareFeet: listing.SquareFeet,
-      description: listing.Description,
-      dateListed: listing.DateListed,
-      isActive: listing.IsActive,
-      agentID: listing.AgentID,
-      dateModified: listing.DateModified,
-    }));
-    res.json({ message: 'Listings fetched successfully', listings: mappedListings });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Error fetching listings' });
-  }
-});
-
-app.get('/api/getPropertyDetails/:id', async (req, res) => {
-  const { id } = req.params;
-
-  if (!id) {
-    return res.status(400).json({ error: 'ID is required.' });
-  }
-
-  try {
-    const pool = await sql.connect(config);
-    const result = await pool.request()
-      .input('id', sql.Int, id)
-      .query('SELECT * FROM RealEstateListings WHERE ListingID = @id');
-
-    if (result.recordset.length === 0) {
-      return res.status(404).json({ message: 'Listing not found.' });
-    }
-
-    const listing = result.recordset[0];
-    const mappedListing = {
-      id: listing.ListingID,
-      address: listing.Address,
-      city: listing.City,
-      state: listing.State,
-      zip: listing.ZipCode,
-      price: listing.Price,
-      bedrooms: listing.Bedrooms,
-      bathrooms: listing.Bathrooms,
-      squareFeet: listing.SquareFeet,
-      description: listing.Description,
-      dateListed: listing.DateListed,
-      isActive: listing.IsActive,
-      agentID: listing.AgentID,
-      dateModified: listing.DateModified,
-      location: `${listing.City}, ${listing.State} ${listing.ZipCode}`,
-      realtorName: 'John Doe', // Placeholder, consider fetching from another table or model if necessary.
-      propertyType: '', // This isn't in your schema, it remains as a placeholder.
-    };
-
-    res.json({ message: 'Listing fetched successfully', listing: mappedListing });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Error fetching the listing' });
-  }
-});
-
-
 
 app.put('/api/EditUserInfo', (req, res) => {
   console.log(req.body);
@@ -401,7 +251,6 @@ app.post('/api/updateOrderStatus', async (req, res) => {
     const pool = await sql.connect(config);
     const result = await pool.request()
       .input('orderID', sql.Int, orderID)
-      .input('status', sql.VarChar, status)
       .execute('update_order_status');
 
     res.send({ success: true });
