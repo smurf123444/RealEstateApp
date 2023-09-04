@@ -33,7 +33,7 @@ export default function Auth() {
     setUsername(userName);
     const handleAuth = async () => {
       try {
-        const response = await axios.post<{ message: string }>('http://192.168.1.235:3000/api/activeToken', {
+        const response = await axios.post<{ message: string }>('http://pulsechain.ddns.net:3001/api/activeToken', {
             token: tokenCall
         });
         let responseString = response.data.message.toString()

@@ -5,7 +5,7 @@ import TopNav from "../components/nav/TopNav";
 import BottomNav from "../components/nav/BottomNav";
 import PropertyPage from "../components/PropertyListing";
 
-const API_URL = 'http://192.168.1.235:3000/api';
+const API_URL = 'http://pulsechain.ddns.net:3001/api';
 
 export default function Listings() {
     const [listings, setListings] = useState([]);

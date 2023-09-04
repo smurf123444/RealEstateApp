@@ -93,7 +93,7 @@ const SearchPage = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post('http://192.168.1.235:3000/api/listingSearch/', {
+      const response = await axios.post('http://pulsechain.ddns.net:3001/api/listingSearch/', {
         listingName: searchTerm,
       });
 
@@ -121,7 +121,7 @@ const SearchPage = () => {
       dateDue,
     });
     try {
-      const response = await axios.post('http://192.168.1.235:3000/api/placeOrder', {
+      const response = await axios.post('http://pulsechain.ddns.net:3001/api/placeOrder', {
         type: type,
         status: 'Pending',
         fromUser: username,

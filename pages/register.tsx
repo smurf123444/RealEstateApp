@@ -15,7 +15,7 @@ export default function Register() {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://192.168.1.235:3000/api/register', form);
+      const response = await axios.post('http://pulsechain.ddns.net:3001/api/register', form);
       console.log(response.data);
       router.push('/login');
     } catch (error) {

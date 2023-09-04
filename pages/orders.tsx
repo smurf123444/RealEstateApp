@@ -29,7 +29,7 @@ const PendingOrdersPage = () => {
       setIsLoading(true);
       
       try {
-        const response = await axios.post('http://192.168.1.235:3000/api/orders/', {
+        const response = await axios.post('http://pulsechain.ddns.net:3001/api/orders/', {
           user: username,
         });
         setPendingOrders(response.data.data);
@@ -65,7 +65,7 @@ const PendingOrdersPage = () => {
   const handleNewOrderClick = async (orderId) => {
     console.log(`Handle New Order Clicked for Order Id: ${orderId}`);
     try {
-      const response = await axios.post('http://192.168.1.235:3000/api/updateOrderStatus', {
+      const response = await axios.post('http://pulsechain.ddns.net:3001/api/updateOrderStatus', {
         orderID: orderId,
         status: 'Meet And Greet'
       });
@@ -85,7 +85,7 @@ const PendingOrdersPage = () => {
   const handleCancelOrderClick = async (orderId) => {
     console.log(`Handle New Order Clicked for Order Id: ${orderId}`);
     try {
-      const response = await axios.post('http://192.168.1.235:3000/api/updateOrderStatus', {
+      const response = await axios.post('http://pulsechain.ddns.net:3001/api/updateOrderStatus', {
         orderID: orderId,
         status: 'Canceled'
       });
@@ -106,7 +106,7 @@ const PendingOrdersPage = () => {
   const handleInProgressClick = async (orderId) => {
     console.log(`Handle In Progress Clicked for Order Id: ${orderId}`);
     try {
-      const response = await axios.post('http://192.168.1.235:3000/api/updateOrderStatus', {
+      const response = await axios.post('http://pulsechain.ddns.net:3001/api/updateOrderStatus', {
         orderID: orderId,
         status: 'Completed'
       });
@@ -127,7 +127,7 @@ const PendingOrdersPage = () => {
   const handleCompletedClick = async (orderId) => {
     console.log(`Handle Completed Clicked for Order Id: ${orderId}`);
     try {
-      const response = await axios.post('http://192.168.1.235:3000/api/updateOrderStatus', {
+      const response = await axios.post('http://pulsechain.ddns.net:3001/api/updateOrderStatus', {
         orderID: orderId,
         status: 'Completed'
       });
@@ -148,7 +148,7 @@ const PendingOrdersPage = () => {
   const handleArchiveClick = async (orderId) => {
     console.log(`Handle Completed Clicked for Order Id: ${orderId}`);
     try {
-      const response = await axios.post('http://192.168.1.235:3000/api/updateOrderStatus', {
+      const response = await axios.post('http://pulsechain.ddns.net:3001/api/updateOrderStatus', {
         orderID: orderId,
         status: 'Archived'
       });
@@ -169,7 +169,7 @@ const PendingOrdersPage = () => {
   const handleMeetAndGreetClick = async (orderId) => {
     console.log(`Handle Completed Clicked for Order Id: ${orderId}`);
     try {
-      const response = await axios.post('http://192.168.1.235:3000/api/updateOrderStatus', {
+      const response = await axios.post('http://pulsechain.ddns.net:3001/api/updateOrderStatus', {
         orderID: orderId,
         status: 'Accepted'
       });

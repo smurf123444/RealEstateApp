@@ -38,7 +38,7 @@ export default function Edit() {
     setAccountType(accountType)
     const handleAuth = async () => {
       try {
-        const response = await axios.post<{ message: string }>('http://192.168.1.235:3000/api/activeToken', {
+        const response = await axios.post<{ message: string }>('http://pulsechain.ddns.net:3001/api/activeToken', {
           token: tokenCall
         });
         let responseString = response.data.message.toString()
@@ -64,7 +64,7 @@ export default function Edit() {
 
     const handleInfo = async () => {
       try {
-        const response = await axios.post<{ rowID: string, data: any }>('http://192.168.1.235:3000/api/accountInfo', {
+        const response = await axios.post<{ rowID: string, data: any }>('http://pulsechain.ddns.net:3001/api/accountInfo', {
           username: username
         });
         // let tits = response.data.rowID.toString()
@@ -132,7 +132,7 @@ export default function Edit() {
     /*         console.log(userName);
             console.log(token); */
     try {
-      const request = axios.put<{ rowID: string, data: any }>('http://192.168.1.235:3000/api/EditUserInfo', {
+      const request = axios.put<{ rowID: string, data: any }>('http://pulsechain.ddns.net:3001/api/EditUserInfo', {
         token: token,
         data12: userName,
         data1: listingName,

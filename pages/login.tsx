@@ -19,7 +19,7 @@ export default function Login() {
     console.log(form)
     try {
         // After successful login
-        const response = await axios.post<{ message: string, accountType: number }>('http://192.168.1.235:3000/api/login', form)
+        const response = await axios.post<{ message: string, accountType: number }>('http://pulsechain.ddns.net:3001/api/login', form)
         let responseString = response.data.message.toString()
 
         // Store the account type in a cookie

@@ -40,7 +40,7 @@ export default function Auth() {
       );
         const handleAuth = async () => {
             try {
-           const response = await axios.post<{ message: string }>('http://192.168.1.235:3000/api/activeToken', {
+           const response = await axios.post<{ message: string }>('http://pulsechain.ddns.net:3001/api/activeToken', {
               token: tokenCall
             });
             let responseString = response.data.message.toString()
@@ -64,7 +64,7 @@ export default function Auth() {
 
 const handleInfo = async () => {
     try {
-   const response = await axios.post<{ rowID: string, data: any }>('http://192.168.1.235:3000/api/accountInfo', {
+   const response = await axios.post<{ rowID: string, data: any }>('http://pulsechain.ddns.net:3001/api/accountInfo', {
       token: tokenCall,
       username: username
     });

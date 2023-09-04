@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { Button, TextField, Container, Typography } from '@mui/material';
 import axios from 'axios';
-const API_URL = 'http://192.168.1.235:3000/api';
+const API_URL = 'http://pulsechianwow.ddns.net:3001/api';
 
 const EditPage = () => {
     const router = useRouter();
